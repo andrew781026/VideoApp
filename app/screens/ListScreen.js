@@ -71,11 +71,22 @@ const Card = ({text}) => (
 // |   | : Portrait - 左右 2 個 , |------| : landscape - 左右 3 個
 // |---|                         |------|
 // 直式螢幕稱為「Portrait」，橫式螢幕「Landscape」
-const ListScreen = ({navigation}) => (
-  <Container>
-    <Card text='good'/>
-    <Card text='bad'/>
-  </Container>
-);
+class ListScreen extends React.Component{
+
+  static navigationOptions = ({navigation}) => UecareNavigationHeader.create({
+    title: screenLabels.title,
+    titleStyle: {},
+    navigation
+  });
+
+  render() {
+    return (
+      <Container>
+        <Card text='good'/>
+        <Card text='bad'/>
+      </Container>
+    )
+  }
+}
 
 export default ListScreen;
