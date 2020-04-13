@@ -19,3 +19,9 @@
 
 
 - the shell to open the dev menu of android mobile - `adb shell input keyevent 82`
+
+
+## 參考資料
+
+- [使用 React Native 開發 Android 的心得 by ReactMaker](https://medium.com/reactmaker/%E4%BD%BF%E7%94%A8-react-native-%E9%96%8B%E7%99%BC-android-%E7%9A%84%E5%BF%83%E5%BE%97-6d2592cf03bb)
+- [Using Styled Components with React Native](https://levelup.gitconnected.com/using-styled-components-with-react-native-de645fcf4787)
