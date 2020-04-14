@@ -51,6 +51,12 @@ const HomeStack = () => (
   </Stack.Navigator>
 );
 
+const ListStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="List" component={ListScreen}/>
+  </Stack.Navigator>
+);
+
 export default function App() {
   return (
     <NavigationContainer>
@@ -69,8 +75,8 @@ export default function App() {
             tabBarIcon: ({color}) => <MaterialCommunityIcons name="home" color={color} size={26}/>
           }}/>
         <Tab.Screen
-          name="List"
-          component={ListScreen}
+          name="ListShow"
+          component={ListStack}
           options={{
             tabBarLabel: '列表',
             tabBarBadge: true,

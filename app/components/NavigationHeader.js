@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from "prop-types";
 
 class NavigationHeader extends React.Component {
   static propTypes = {
@@ -9,7 +10,7 @@ class NavigationHeader extends React.Component {
 
   static defaultProps = {
     title: "",
-    style: HeaderStyle.darkerMedicalGreenContainer.style,
+    style: 'green',
     titleStyle: {},
   };
 
