@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Image, StyleSheet, Text, View, SafeAreaView, FlatList, Dimensions} from "react-native";
+import {Image, StyleSheet, Text, View, SafeAreaView, FlatList, Dimensions, TouchableOpacity} from "react-native";
 import styled from 'styled-components/native'; // https://levelup.gitconnected.com/using-styled-components-with-react-native-de645fcf4787
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
@@ -104,24 +104,26 @@ const isPortrait = () => {
 
 const getOrientation = () => isPortrait() ? 'portrait' : 'landscape';
 
-const Card = ({text, favorite}) => (
+const Card = ({navigation, text, favorite}) => (
   <View style={styles.box}>
-    <View style={styles.imageContainer}>
-      <Image
-        style={styles.image}
-        source={require('../assets/card_one.png')}
-        resizeMode='center' // cover . contain . stretch . repeat . center
-      />
-      <View style={styles.favorite}>
-        <MaterialCommunityIcons style={styles.heart} color={favorite ? 'red' : 'white'} name="heart" size={26}/>
+    <TouchableOpacity onPress={() => navigation.navigate('VideoInfo')}>
+      <View style={styles.imageContainer}>
+        <Image
+          style={styles.image}
+          source={require('../assets/card_one.png')}
+          resizeMode='center' // cover . contain . stretch . repeat . center
+        />
+        <View style={styles.favorite}>
+          <MaterialCommunityIcons style={styles.heart} color={favorite ? 'red' : 'white'} name="heart" size={26}/>
+        </View>
+        <View style={styles.watchNumber}>
+          <MaterialCommunityIcons name="fire" size={26}/>
+          <Text>745735</Text>
+        </View>
       </View>
-      <View style={styles.watchNumber}>
-        <MaterialCommunityIcons name="fire" size={26}/>
-        <Text>745735</Text>
-      </View>
-    </View>
-    <Text>如果有妹妹好了</Text>
-    <Text>11/26 更新至第 8 集</Text>
+      <Text>如果有妹妹好了</Text>
+      <Text>11/26 更新至第 8 集</Text>
+    </TouchableOpacity>
   </View>
 );
 
@@ -166,7 +168,7 @@ class ListScreen extends React.Component {
           key={this.state.orientation}
           data={DATA}
           renderItem={({item}) => (
-            <Card {...item}/>
+            <Card {...item} navigation={this.props.navigation}/>
           )}
           keyExtractor={item => item.id}
           numColumns={this.state.orientation === 'portrait' ? 2 : 4}

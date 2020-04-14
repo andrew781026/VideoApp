@@ -1,5 +1,3 @@
-import {getReduxDispatch, getReduxState} from "../@createStore";
-
 const ActionType = {
   SET_USER: '[USER] SET_USER',
 };

@@ -11,6 +11,7 @@ import FavoriteScreen from './screens/FavoriteScreen';
 import HomeScreen from './screens/HomeScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import ListScreen from './screens/ListScreen';
+import VideoInfoScreen from './screens/VideoInfoScreen';
 
 const styles = StyleSheet.create({
   container: {
@@ -54,6 +55,7 @@ const HomeStack = () => (
 const ListStack = () => (
   <Stack.Navigator>
     <Stack.Screen name="List" component={ListScreen}/>
+    <Stack.Screen name="VideoInfo" component={VideoInfoScreen}/>
   </Stack.Navigator>
 );
 
