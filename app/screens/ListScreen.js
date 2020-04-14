@@ -59,39 +59,86 @@ const styles = StyleSheet.create({
   }
 });
 
+function guidGenerator() {
+
+  /**
+   * @return {string}
+   */
+  const S4 = () => (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+
+  return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+}
+
 const DATA = [
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
+    id: guidGenerator(),
+    title: '狼與興香料',
+    imageSrc: require('../assets/wolf-and-salt.jpg'),
+    updateAt: new Date(2020, 3, 10, 5, 10, 22, 33),
+    totalVideoNumber: 8,
     favorite: true,
+    watchNumber: 1573,
   },
   {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
+    id: guidGenerator(),
+    title: '飛天小女警',
+    imageSrc: require('../assets/flying-cop-girls.jpg'),
+    updateAt: new Date(2020, 4, 9, 2, 7, 1, 5),
+    totalVideoNumber: 7,
+    favorite: true,
+    watchNumber: 21648,
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
+    id: guidGenerator(),
+    title: 'Keroro軍曹',
+    imageSrc: require('../assets/keroro.jpg'),
+    updateAt: new Date(2020, 2, 18, 21, 8, 17, 147),
+    totalVideoNumber: 3,
+    watchNumber: 14516,
   },
   {
-    id: 'r8694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
+    id: guidGenerator(),
+    title: '飛天少女豬',
+    imageSrc: require('../assets/flying-pig.jpg'),
+    updateAt: new Date(2020, 3, 10, 5, 10, 22, 33),
+    totalVideoNumber: 10,
+    favorite: true,
+    watchNumber: 584515,
   },
   {
-    id: 'w8694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
+    id: guidGenerator(),
+    title: '校園嬌娃',
+    imageSrc: require('../assets/totally-spies.jpg'),
+    updateAt: new Date(2020, 3, 10, 5, 10, 22, 33),
+    totalVideoNumber: 9,
+    watchNumber: 562562,
   },
   {
-    id: 'g94a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
+    id: guidGenerator(),
+    title: '德克斯特的實驗室',
+    imageSrc: require('../assets/dexter-lab.jpg'),
+    updateAt: new Date(2020, 3, 10, 5, 10, 22, 33),
+    totalVideoNumber: 11,
+    favorite: true,
+    watchNumber: 486528,
   },
   {
-    id: '594a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
+    id: guidGenerator(),
+    title: '膽小狗英雄',
+    imageSrc: require('../assets/frighten-dog.jpg'),
+    updateAt: new Date(2020, 3, 10, 5, 10, 22, 33),
+    totalVideoNumber: 8,
+    favorite: true,
+    watchNumber: 5240,
   },
   {
-    id: '5efg4a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
+    id: guidGenerator(),
+    title: '愛書的下克上',
+    imageSrc: require('../assets/love-book-avenge.jpg'),
+    updateAt: new Date(2020, 3, 10, 5, 10, 22, 33),
+    totalVideoNumber: 8,
+    favorite: true,
+    watchNumber: 52751,
   },
 ];
 
@@ -104,13 +151,13 @@ const isPortrait = () => {
 
 const getOrientation = () => isPortrait() ? 'portrait' : 'landscape';
 
-const Card = ({navigation, text, favorite}) => (
+const Card = ({navigation, id, title, imageSrc, updateAt, totalVideoNumber, favorite, watchNumber,}) => (
   <View style={styles.box}>
     <TouchableOpacity onPress={() => navigation.navigate('VideoInfo')}>
       <View style={styles.imageContainer}>
         <Image
           style={styles.image}
-          source={require('../assets/card_one.png')}
+          source={imageSrc}
           resizeMode='center' // cover . contain . stretch . repeat . center
         />
         <View style={styles.favorite}>
@@ -118,11 +165,11 @@ const Card = ({navigation, text, favorite}) => (
         </View>
         <View style={styles.watchNumber}>
           <MaterialCommunityIcons name="fire" size={26}/>
-          <Text>745735</Text>
+          <Text>{watchNumber}</Text>
         </View>
       </View>
-      <Text>如果有妹妹好了</Text>
-      <Text>11/26 更新至第 8 集</Text>
+      <Text>{title}</Text>
+      <Text>{updateAt} 更新至第 {totalVideoNumber} 集</Text>
     </TouchableOpacity>
   </View>
 );
