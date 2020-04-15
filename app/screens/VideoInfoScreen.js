@@ -3,7 +3,7 @@ import {StyleSheet, SafeAreaView, Dimensions, View} from "react-native";
 import {Video} from 'expo-av';
 import {HeaderFactory} from '../components/NavigationHeader';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
-import {TapGestureHandler, State, PanGestureHandler} from 'react-native-gesture-handler';
+import {PanGestureHandler} from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
   backgroundVideo: {
@@ -112,44 +112,22 @@ class VideoInfoScreen extends React.Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
+        <Video
+          ref={ref => this.playbackObject = ref}
+          source={{uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}} // https://youtu.be/FiGmAI5e91M
+          rate={1.0}
+          volume={1.0}
+          shouldPlay={false}
+          useNativeControls={true}
+          isMuted={false}
+          resizeMode="cover"
+          style={{width: '100%', height: 300}}
+        />
+        {/* Pan Gesture is drag or flick */}
         <PanGestureHandler
-          onHadlerStateChange={({nativeEvent}) => {
-            switch (nativeEvent.state) {
-              case State.UNDETERMINED:
-                console.log('等待手勢');
-                break;
-              case State.BEGAN:
-                console.log('手勢開始');
-                break;
-              case State.CANCELLED:
-                console.log('手勢取消');
-                break;
-              case State.ACTIVE:
-                console.log('手勢活躍');
-                break;
-              case State.END:
-                console.log('手勢結束');
-                break;
-              case State.FAILED:
-                console.log('失敗');
-                break;
-              default:
-                console.log('其他');
-                break;
-            }
-          }}
+          onGestureEvent={() => console.warn('Pan trigger')}
         >
-          <Video
-            ref={ref => this.playbackObject = ref}
-            source={{uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}} // https://youtu.be/FiGmAI5e91M
-            rate={1.0}
-            volume={1.0}
-            shouldPlay={false}
-            useNativeControls={true}
-            isMuted={false}
-            resizeMode="cover"
-            style={{width: '100%', height: 300}}
-          />
+          <View style={{width: '100%', height: 50, backgroundColor: '#854216'}}/>
         </PanGestureHandler>
         <VideoController
           ref={ref => this.controller = ref}

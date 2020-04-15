@@ -4,6 +4,7 @@ import styled from 'styled-components/native'; // https://levelup.gitconnected.c
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {HeaderFactory} from '../components/NavigationHeader';
+import moment from 'moment';
 
 const Container = styled.View`
 	flex: 1;
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     position: 'relative',
     width: '100%',
-    height: 200,
+    height: 140,
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
   },
   image: {
@@ -72,7 +73,7 @@ function guidGenerator() {
 const DATA = [
   {
     id: guidGenerator(),
-    title: '狼與興香料',
+    title: '狼與辛香料',
     imageSrc: require('../assets/wolf-and-salt.jpg'),
     updateAt: new Date(2020, 3, 10, 5, 10, 22, 33),
     totalVideoNumber: 8,
@@ -158,7 +159,7 @@ const Card = ({navigation, id, title, imageSrc, updateAt, totalVideoNumber, favo
         <Image
           style={styles.image}
           source={imageSrc}
-          resizeMode='center' // cover . contain . stretch . repeat . center
+          resizeMode='contain' // cover . contain . stretch . repeat . center
         />
         <View style={styles.favorite}>
           <MaterialCommunityIcons style={styles.heart} color={favorite ? 'red' : 'white'} name="heart" size={26}/>
@@ -169,7 +170,7 @@ const Card = ({navigation, id, title, imageSrc, updateAt, totalVideoNumber, favo
         </View>
       </View>
       <Text>{title}</Text>
-      <Text>{updateAt} 更新至第 {totalVideoNumber} 集</Text>
+      <Text>{moment(updateAt).format('MM/DD')} 更新至第 {totalVideoNumber} 集</Text>
     </TouchableOpacity>
   </View>
 );
@@ -181,12 +182,6 @@ const Card = ({navigation, id, title, imageSrc, updateAt, totalVideoNumber, favo
 // 直式螢幕稱為「Portrait」，橫式螢幕「Landscape」
 class ListScreen extends React.Component {
 
-  static navigationOptions = ({navigation}) => HeaderFactory.create({
-    title: '動畫列表',
-    titleStyle: {},
-    navigation
-  });
-
   constructor() {
     super();
     this.state = {
@@ -196,6 +191,12 @@ class ListScreen extends React.Component {
   }
 
   componentDidMount() {
+
+    // set Header , 參考資料 : https://reactnavigation.org/blog/2020/02/06/react-navigation-5.0/
+    this.props.navigation.setOptions({
+      title: '懷舊動畫列表',
+    });
+
     Dimensions.addEventListener("change", () => {
       this.setState({
         orientation: getOrientation()
