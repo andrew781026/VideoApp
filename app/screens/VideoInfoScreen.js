@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, SafeAreaView, Dimensions, View} from "react-native";
+import {StyleSheet, SafeAreaView, Dimensions, View, TouchableWithoutFeedback} from "react-native";
 import {Video} from 'expo-av';
 import {HeaderFactory} from '../components/NavigationHeader';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
@@ -29,7 +29,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: "rgba(0, 0, 0, 0.5)",
-  }
+  },
+  videoController: {
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
 });
 
 // if height > width, then orientation is portrait, otherwise landscape
@@ -110,19 +120,36 @@ class VideoInfoScreen extends React.Component {
 
   // you need to custom your control bar , ref : https://medium.com/front-end-weekly/how-to-play-video-with-react-native-and-expo-30523bfcb311
   render() {
+
+    /*
+    * skip-backward : 到最前面 ( to 00:00 )
+    * replay-10 : 向前 10 秒鐘 ( - 10 s )
+    * forward-10 : 向後 10 秒鐘 ( + 10 s )
+    * skip-forward : 到最後一秒 ( to last )
+    * */
+
     return (
       <SafeAreaView style={styles.container}>
-        <Video
-          ref={ref => this.playbackObject = ref}
-          source={{uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}} // https://youtu.be/FiGmAI5e91M
-          rate={1.0}
-          volume={1.0}
-          shouldPlay={false}
-          useNativeControls={true}
-          isMuted={false}
-          resizeMode="cover"
-          style={{width: '100%', height: 300}}
-        />
+        <TouchableWithoutFeedback onPress={() => alert('Pressed!')}>
+          <View style={styles.videoController}>
+            <MaterialCommunityIcons name="skip-backward" size={26}/>
+            <MaterialCommunityIcons name="replay-10" size={26}/>
+            <MaterialCommunityIcons name="play" size={26}/>
+            <MaterialCommunityIcons name="forward-10" size={26}/>
+            <MaterialCommunityIcons name="skip-forward" size={26}/>
+          </View>
+          <Video
+            ref={ref => this.playbackObject = ref}
+            source={{uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}} // https://youtu.be/FiGmAI5e91M
+            rate={1.0}
+            volume={1.0}
+            shouldPlay={false}
+            useNativeControls={true}
+            isMuted={false}
+            resizeMode="cover"
+            style={{width: '100%', height: 300}}
+          />
+        </TouchableWithoutFeedback>
         {/* Pan Gesture is drag or flick */}
         <PanGestureHandler
           onGestureEvent={() => console.warn('Pan trigger')}

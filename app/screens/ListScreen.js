@@ -175,10 +175,6 @@ const Card = ({navigation, id, title, imageSrc, updateAt, totalVideoNumber, favo
   </View>
 );
 
-// 建立一張張卡片 , 根據手機方向 , 決定左右放多少元素 ,
-// |---|
-// |   | : Portrait - 左右 2 個 , |------| : landscape - 左右 3 個
-// |---|                         |------|
 // 直式螢幕稱為「Portrait」，橫式螢幕「Landscape」
 class ListScreen extends React.Component {
 
