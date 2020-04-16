@@ -2,6 +2,7 @@ import * as React from 'react';
 import {StyleSheet, SafeAreaView, View, Text, TouchableWithoutFeedback, TouchableOpacity} from "react-native";
 import {Video} from 'expo-av';
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons';
+import ProgressBar from '../components/ProgressBar'
 
 const styles = StyleSheet.create({
   backgroundVideo: {
@@ -151,44 +152,54 @@ class MaskVideoController extends React.Component {
     this.props.getPlaybackObject().setOnPlaybackStatusUpdate(this._onPlaybackStatusUpdate);
   }
 
+  _renderBottomProgress = () => (
+    <View style={styles.bottomBar}>
+      <Text style={{color: 'white'}}>
+        {this.state.currentLength} / {this.state.canplayLength} / {this.state.videoLength}
+      </Text>
+      <ProgressBar indicatorRadius={20} progress='20%'/>
+    </View>
+  );
+
+  _renderMiddleController = () => (
+    <View style={styles.iconContainer}>
+      <MaterialCommunityIcons name="skip-backward" color="white" size={40}/>
+      <MaterialIcons name="replay-10" color="white" size={40}/>
+      <IconButton
+        onPress={this.handleVolume}
+        afterPress={() => this.setState({controllerShow: false})}
+        icon={
+          <MaterialCommunityIcons
+            name={this.state.mute ? "volume-mute" : "volume-high"}
+            size={40}
+            color="white"
+          />
+        }
+      />
+      <IconButton
+        onPress={this.handlePlayAndPause}
+        afterPress={() => this.setState({controllerShow: false})}
+        icon={
+          <MaterialCommunityIcons
+            name={this.state.shouldPlay ? "pause" : "play"}
+            size={40}
+            color="white"
+          />
+        }
+      />
+      <MaterialIcons name="forward-10" color="white" size={40}/>
+      <MaterialCommunityIcons name="skip-forward" color="white" size={40}/>
+    </View>
+  );
+
   render() {
 
     return (
       <TouchableWithoutFeedback onPress={() => this.setState({controllerShow: !this.state.controllerShow})}>
         {this.state.controllerShow ? (
           <View style={styles.videoController}>
-            <View style={styles.bottomBar}>
-              <Text
-                style={{color: 'white'}}> {this.state.currentLength} / {this.state.canplayLength} / {this.state.videoLength}</Text>
-            </View>
-            <View style={styles.iconContainer}>
-              <MaterialCommunityIcons name="skip-backward" color="white" size={40}/>
-              <MaterialIcons name="replay-10" color="white" size={40}/>
-              <IconButton
-                onPress={this.handleVolume}
-                afterPress={() => this.setState({controllerShow: false})}
-                icon={
-                  <MaterialCommunityIcons
-                    name={this.state.mute ? "volume-mute" : "volume-high"}
-                    size={40}
-                    color="white"
-                  />
-                }
-              />
-              <IconButton
-                onPress={this.handlePlayAndPause}
-                afterPress={() => this.setState({controllerShow: false})}
-                icon={
-                  <MaterialCommunityIcons
-                    name={this.state.shouldPlay ? "pause" : "play"}
-                    size={40}
-                    color="white"
-                  />
-                }
-              />
-              <MaterialIcons name="forward-10" color="white" size={40}/>
-              <MaterialCommunityIcons name="skip-forward" color="white" size={40}/>
-            </View>
+            {this._renderBottomProgress()}
+            {this._renderMiddleController()}
           </View>
         ) : (
           <View style={styles.emptyController}/>
