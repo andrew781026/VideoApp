@@ -3,7 +3,6 @@ import {Image, StyleSheet, Text, View, SafeAreaView, FlatList, Dimensions, Touch
 import styled from 'styled-components/native'; // https://levelup.gitconnected.com/using-styled-components-with-react-native-de645fcf4787
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
-import {HeaderFactory} from '../components/NavigationHeader';
 import moment from 'moment';
 
 const Container = styled.View`

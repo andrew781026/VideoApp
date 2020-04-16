@@ -25,3 +25,7 @@
 
 - [使用 React Native 開發 Android 的心得 by ReactMaker](https://medium.com/reactmaker/%E4%BD%BF%E7%94%A8-react-native-%E9%96%8B%E7%99%BC-android-%E7%9A%84%E5%BF%83%E5%BE%97-6d2592cf03bb)
 - [Using Styled Components with React Native](https://levelup.gitconnected.com/using-styled-components-with-react-native-de645fcf4787)
+
+## 問題集
+
+- 如果要撥放 youtube , 可能需要用到 [react-native-youtube](https://github.com/davidohayon669/react-native-youtube) 或是用 [WebView](https://snack.expo.io/Syhzx-VvX) 處理
