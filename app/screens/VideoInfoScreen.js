@@ -2,7 +2,8 @@ import * as React from 'react';
 import {StyleSheet, SafeAreaView, View, Text, TouchableWithoutFeedback, TouchableOpacity} from "react-native";
 import {Video} from 'expo-av';
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons';
-import ProgressBar from '../components/ProgressBar'
+import ProgressBar from '../components/ProgressBar';
+import DateUtil from '../utils/dateUtil';
 
 const styles = StyleSheet.create({
   backgroundVideo: {
@@ -30,6 +31,9 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   videoController: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
     position: 'absolute',
     zIndex: 5,
     width: '100%',
@@ -59,6 +63,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: "black",
   },
 });
 
@@ -90,23 +95,11 @@ class MaskVideoController extends React.Component {
     canplayLength: 0
   };
 
-  handlePlayAndPause = () => {
-    const playbackObject = this.props.getPlaybackObject();
-    if (this.state.shouldPlay) playbackObject.pauseAsync();
-    else playbackObject.playAsync();
-    this.setState(prevState => ({shouldPlay: !prevState.shouldPlay}));
-  };
+  componentDidMount() {
 
-  handleVolume = () => {
-    const playbackObject = this.props.getPlaybackObject();
-    playbackObject.setIsMutedAsync(!this.state.mute);
-    this.setState(prevState => ({mute: !prevState.mute}));
-  };
-
-  changeVideo = () => {
-    // playbackObject.unloadAsync(); // Unloads the media from memory. loadAsync() must be called again in order to be able to play the media.
-    // playbackObject.loadAsync(source, initialStatus = {}, downloadFirst = true);
-  };
+    // Load the playbackObject and obtain the reference.
+    this.props.getPlaybackObject().setOnPlaybackStatusUpdate(this._onPlaybackStatusUpdate);
+  }
 
   _onPlaybackStatusUpdate = playbackStatus => {
     if (!playbackStatus.isLoaded) {
@@ -146,18 +139,33 @@ class MaskVideoController extends React.Component {
     }
   };
 
-  componentDidMount() {
+  handlePlayAndPause = () => {
+    const playbackObject = this.props.getPlaybackObject();
+    if (this.state.shouldPlay) playbackObject.pauseAsync();
+    else playbackObject.playAsync();
+    this.setState(prevState => ({shouldPlay: !prevState.shouldPlay}));
+  };
 
-    // Load the playbackObject and obtain the reference.
-    this.props.getPlaybackObject().setOnPlaybackStatusUpdate(this._onPlaybackStatusUpdate);
-  }
+  handleVolume = () => {
+    const playbackObject = this.props.getPlaybackObject();
+    playbackObject.setIsMutedAsync(!this.state.mute);
+    this.setState(prevState => ({mute: !prevState.mute}));
+  };
+
+  changeVideo = () => {
+    // playbackObject.unloadAsync(); // Unloads the media from memory. loadAsync() must be called again in order to be able to play the media.
+    // playbackObject.loadAsync(source, initialStatus = {}, downloadFirst = true);
+  };
 
   _renderBottomProgress = () => (
     <View style={styles.bottomBar}>
       <Text style={{color: 'white'}}>
-        {this.state.currentLength} / {this.state.canplayLength} / {this.state.videoLength}
+        {DateUtil.durationFormat(this.state.currentLength)} / {DateUtil.durationFormat(this.state.videoLength)}
       </Text>
-      <ProgressBar indicatorRadius={20} progress='20%'/>
+      <View style={{width: '70%', margin: 5}}>
+        <ProgressBar indicatorRadius={20}
+                     progress={this.state.currentLength / this.state.videoLength }/>
+      </View>
     </View>
   );
 
@@ -256,7 +264,7 @@ class VideoInfoScreen extends React.Component {
           <View style={{backgroundColor: 'rgba(0,0,0,0.3)', height: 300}}>
             <Video
               ref={ref => this.playbackObject = ref}
-              source={{uri: this.videos[1]}}
+              source={{uri: this.videos[0]}}
               rate={1.0}
               volume={1.0}
               shouldPlay={false}
