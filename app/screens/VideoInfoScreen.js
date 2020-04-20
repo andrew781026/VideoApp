@@ -4,6 +4,7 @@ import {Video} from 'expo-av';
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons';
 import ProgressBar from '../components/ProgressBar';
 import DateUtil from '../utils/dateUtil';
+import {PanGestureHandler} from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
   backgroundVideo: {
@@ -86,6 +87,8 @@ class IconButton extends React.Component {
 
 class MaskVideoController extends React.Component {
 
+  x = 0;
+
   state = {
     controllerShow: false,
     mute: false,
@@ -158,15 +161,22 @@ class MaskVideoController extends React.Component {
   };
 
   _renderBottomProgress = () => (
-    <View style={styles.bottomBar}>
-      <Text style={{color: 'white'}}>
-        {DateUtil.durationFormat(this.state.currentLength)} / {DateUtil.durationFormat(this.state.videoLength)}
-      </Text>
-      <View style={{width: '70%', margin: 5}}>
-        <ProgressBar indicatorRadius={20}
-                     progress={this.state.currentLength / this.state.videoLength }/>
+    <PanGestureHandler
+      onGestureEvent={evt => {
+        console.log(evt.nativeEvent);
+        this.x = evt.nativeEvent.translationX
+      }}>
+      <View style={styles.bottomBar}>
+        <Text style={{color: 'white'}}>
+          {DateUtil.durationFormat(this.state.currentLength)} / {DateUtil.durationFormat(this.state.videoLength)}
+        </Text>
+        <View style={{width: '70%', margin: 5}}>
+          <ProgressBar indicatorRadius={20}
+                       x={this.x}
+                       progress={this.state.currentLength / this.state.videoLength}/>
+        </View>
       </View>
-    </View>
+    </PanGestureHandler>
   );
 
   _renderMiddleController = () => (

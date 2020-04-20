@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Button, StyleSheet, Text, View} from "react-native";
+import Draggable from "../components/Draggable";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,6 +20,7 @@ const HomeScreen = ({navigation}) => (
       color="#841584"
       accessibilityLabel="Learn more about this purple button"
     />
+    <Draggable/>
   </View>
 );
 
