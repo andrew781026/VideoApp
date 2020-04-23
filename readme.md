@@ -1,5 +1,7 @@
 # 練習製作 - 留言板 & 影音撥放
 
+- 也許可以參考 https://github.com/ptomasroos/react-native-multi-slider 做一個 progress bar
+
 ## 使用技術
 - react native
 - expo
